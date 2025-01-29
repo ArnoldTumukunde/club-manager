@@ -159,7 +159,7 @@ impl pallet_sudo::Config for Runtime {
 impl pallet_club::Config for Runtime {
     type RuntimeEvent = RuntimeEvent;
     type Currency = Balances;
-    type WeightInfo = ();
+    type WeightInfo = pallet_club::weights::SubstrateWeight<Runtime>;
     type CreationFee = ConstU128<1000>;  // 1000 base units of currency
     type MaxYears = ConstU32<100>;
     type YearDuration = ConstU64<31_536_000>; // 1 year in seconds (365 days)

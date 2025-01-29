@@ -1,7 +1,6 @@
 use crate::{mock::*, Error, Clubs, ClubInfo};
 use frame_support::{assert_noop, assert_ok};
 use frame_support::traits::fungible::Mutate;
-use frame_support::traits::Time;
 
 
 #[test]
@@ -43,7 +42,7 @@ fn join_club_works() {
         Clubs::<Test>::insert(0, ClubInfo { owner: 1, annual_fee: 100 });
         Balances::set_balance(&2, 1000);
 
-        assert_ok!(Club::join_club(RuntimeOrigin::signed(2), 0, 1, Timestamp::now()));
+        assert_ok!(Club::join_club(RuntimeOrigin::signed(2), 0, 1));
         assert_eq!(Club::members(0, &2), Some(31_536_000_000)); // 1 year
     });
 }

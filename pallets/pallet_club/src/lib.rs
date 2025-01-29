@@ -11,7 +11,7 @@ mod tests;
 mod benchmarking;
 
 pub mod weights;
-pub use weights::*;
+pub use weights::WeightInfo;
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -40,7 +40,7 @@ pub mod pallet {
         type YearDuration: Get<u64>;
     }
 
-    type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+    pub type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
     type ClubId = u64;
 
     /// Storage: Next Club ID
@@ -161,7 +161,6 @@ pub mod pallet {
             origin: OriginFor<T>,
             club_id: ClubId,
             years: u32,
-            now: T::Moment,
         ) -> DispatchResult {
             let member = ensure_signed(origin)?;
             let club = Clubs::<T>::get(club_id).ok_or(Error::<T>::ClubDoesNotExist)?;
@@ -178,7 +177,7 @@ pub mod pallet {
                 total_cost,
                 ExistenceRequirement::KeepAlive,
             )?;
-
+            let now = pallet_timestamp::Pallet::<T>::get();
             let duration_per_year = T::YearDuration::get();
             let durations = duration_per_year.checked_mul(years as u64)
                 .ok_or(Error::<T>::Overflow)?;
@@ -203,7 +202,7 @@ pub mod pallet {
     }
 
     impl<T: Config> Pallet<T> {
-        fn account_id() -> T::AccountId {
+        pub fn account_id() -> T::AccountId {
             let pallet_id = PalletId(*b"ClubMngr");
             pallet_id.into_account_truncating()
         }
