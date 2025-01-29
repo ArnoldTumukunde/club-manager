@@ -1,6 +1,6 @@
 [package]
-name = "pallet-template"
-description = "FRAME pallet template for defining custom runtime logic."
+name = "pallet-club"
+description = "Club member management pallet."
 version = "0.1.0"
 license = "Unlicense"
 authors.workspace = true
@@ -22,11 +22,16 @@ scale-info = { features = [
 frame-benchmarking = { optional = true, workspace = true }
 frame-support.workspace = true
 frame-system.workspace = true
+pallet-timestamp.workspace = true
+sp-arithmetic = { version = "26.0.0", default-features = false }
+pallet-balances.workspace = true
+
 
 [dev-dependencies]
 sp-core = { default-features = true, workspace = true }
 sp-io = { default-features = true, workspace = true }
 sp-runtime = { default-features = true, workspace = true }
+
 
 [features]
 default = ["std"]
@@ -36,6 +41,9 @@ std = [
 	"frame-support/std",
 	"frame-system/std",
 	"scale-info/std",
+	"pallet-timestamp/std",
+	"sp-arithmetic/std",
+	"pallet-balances/std"
 ]
 runtime-benchmarks = [
 	"frame-benchmarking/runtime-benchmarks",
