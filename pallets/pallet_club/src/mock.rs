@@ -77,6 +77,21 @@ impl pallet_timestamp::Config for Test {
     type WeightInfo = ();
 }
 
+impl crate::weights::WeightInfo for () {
+    fn create_club() -> frame_support::weights::Weight {
+        frame_support::weights::Weight::from_parts(10_000_000, 0)
+    }
+    fn transfer_ownership() -> frame_support::weights::Weight {
+        frame_support::weights::Weight::from_parts(8_000_000, 0)
+    }
+    fn set_annual_fee() -> frame_support::weights::Weight {
+        frame_support::weights::Weight::from_parts(8_000_000, 0)
+    }
+    fn join_club() -> frame_support::weights::Weight {
+        frame_support::weights::Weight::from_parts(15_000_000, 0)
+    }
+}
+
 impl pallet_club::Config for Test {
     type RuntimeEvent = RuntimeEvent;
     type Currency = Balances;
